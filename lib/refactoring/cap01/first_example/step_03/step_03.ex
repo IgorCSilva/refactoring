@@ -1,4 +1,4 @@
-defmodule Refactoring.Cap01.FirstExample.Step01 do
+defmodule Refactoring.Cap01.FirstExample.Step03 do
   def start do
     invoices = File.read!("lib/cap01/invoices.json") |> Jason.decode!()
     plays = File.read!("lib/cap01/plays.json") |> Jason.decode!()
@@ -56,28 +56,28 @@ defmodule Refactoring.Cap01.FirstExample.Step01 do
     result
   end
 
-  def amount_for(perf, play) do
+  def amount_for(a_performance, play) do
     case play["type"] do
       "tragedy" ->
-        this_amount = 40000
+        result = 40000
 
-        if perf["audience"] > 30 do
-          this_amount + 1000 * (perf["audience"] - 30)
+        if a_performance["audience"] > 30 do
+          result + 1000 * (a_performance["audience"] - 30)
         else
-          this_amount
+          result
         end
 
       "comedy" ->
-        this_amount = 30000
+        result = 30000
 
-        this_amount =
-          if perf["audience"] > 20 do
-            this_amount + 10000 + 500 * (perf["audience"] - 20)
+        result =
+          if a_performance["audience"] > 20 do
+            result + 10000 + 500 * (a_performance["audience"] - 20)
           else
-            this_amount
+            result
           end
 
-        this_amount + 300 * perf["audience"]
+        result + 300 * a_performance["audience"]
 
       _ -> throw("unknown type: #{play["type"]}")
     end

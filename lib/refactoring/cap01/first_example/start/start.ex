@@ -1,7 +1,7 @@
 defmodule Refactoring.Cap01.FirstExample.Start do
-  def start do
-    invoices = File.read!("lib/cap01/invoices.json") |> Jason.decode!()
-    plays = File.read!("lib/cap01/plays.json") |> Jason.decode!()
+  def read_files do
+    invoices = File.read!("lib/refactoring/cap01/first_example/start/invoices.json") |> Jason.decode!()
+    plays = File.read!("lib/refactoring/cap01/first_example/start/plays.json") |> Jason.decode!()
 
     {invoices, plays}
   end
@@ -20,7 +20,6 @@ defmodule Refactoring.Cap01.FirstExample.Start do
     Enum.reduce(invoice["performances"], {result, total_amount, volume_credits}, fn perf, {result, total_amount, volume_credits} ->
 
       play = plays[perf["playID"]]
-      this_amount = 0
 
       this_amount =
         case play["type"] do
@@ -78,10 +77,10 @@ defmodule Refactoring.Cap01.FirstExample.Start do
     You earned $#{volume_credits} credits
     """
 
-    IO.puts(result)
+    result
   end
 
-  def number_format(locale_code, format_info) do
+  defp number_format(locale_code, format_info) do
 
     case {locale_code, format_info} do
       {"en-US", %{style: "currency", currency: "USD", minimum_fraction_digits: qty}} ->
